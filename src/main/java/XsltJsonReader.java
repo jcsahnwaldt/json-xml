@@ -1,5 +1,9 @@
 import java.io.IOException;
 
+import javax.json.Json;
+import javax.json.JsonException;
+import javax.json.stream.JsonParser;
+
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
 import org.xml.sax.EntityResolver;
@@ -10,7 +14,7 @@ import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.XMLReader;
 
-public class JsonReader implements XMLReader {
+public class XsltJsonReader implements XMLReader {
 
   private EntityResolver entityResolver;
   private DTDHandler dtdHandler;
@@ -79,6 +83,15 @@ public class JsonReader implements XMLReader {
 
   @Override
   public void parse(InputSource input) throws IOException, SAXException {
+    try {
+      try (JsonParser parser = Json.createParser(input.getCharacterStream())) {
+      }
+    }
+    catch (JsonException e) {
+      Throwable cause = e.getCause();
+      if (cause instanceof IOException) throw (IOException)cause;
+      else throw new SAXException(e);
+    }
   }
 
   @Override
