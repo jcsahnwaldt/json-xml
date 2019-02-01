@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 class XsltJsonReaderTest {
 
   @Test
-  void test() {
+  void testParse() {
   }
 
 }
